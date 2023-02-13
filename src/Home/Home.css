@@ -1,0 +1,51 @@
+body {
+    background-image: url('./../images/kitchen.jpg');
+    background-size: cover;
+    height: 99vh;
+    background-position: center;
+}
+
+header {
+  background-color: #bf2217d9;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  min-height: 140px;
+}
+
+input {
+  border: none;
+  height: 30px;
+  border-radius: 2px;
+  padding: 5px 1px;
+  font-size: large;
+}
+
+span {
+  background-color: #fff;
+  padding: 5px 10px;
+  border: 2px solid rgba(169, 165, 165, 0.813);
+  border-radius: 2px;
+  color: black;
+}
+
+.searchHolder {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+.search {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.add {
+  padding: 7px;
+  background-color: #4f98eb;
+  color: #fff;
+  border: 1px solid #4f98eb;
+  border-radius: 3px;
+}
