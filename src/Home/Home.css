@@ -3,6 +3,7 @@ body {
     background-size: cover;
     height: 99vh;
     background-position: center;
+    position: relative;
 }
 
 header {
@@ -13,11 +14,11 @@ header {
   min-height: 140px;
 }
 
-input {
+.search__input {
   border: none;
   height: 30px;
   border-radius: 2px;
-  padding: 5px 1px;
+  padding: 5px 3px;
   font-size: large;
 }
 
@@ -49,3 +50,4 @@ span {
   border: 1px solid #4f98eb;
   border-radius: 3px;
 }
+
