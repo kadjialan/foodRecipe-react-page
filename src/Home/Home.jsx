@@ -1,10 +1,17 @@
 /* eslint-disable react/jsx-curly-brace-presence */
-import { useState } from 'react';
+
+import { useContext, useState, useEffect } from 'react';
 import Form from '../Component/Form/Form';
+import { FormContext } from '../Context';
 import './Home.css';
 
 function Home() {
-  const [show, setShow] = useState(false);
+  const { show, setShow } = useContext(FormContext);
+  const [myLocalStorageData, setMyLocalStorageData] = useState([]);
+  useEffect(() => {
+    const data = localStorage.getItem('key');
+    if (data === !null) setMyLocalStorageData(JSON.parse(data));
+  }, []);
   return (
     <div className="container">
       <header>
@@ -26,6 +33,7 @@ function Home() {
         </div>
       </header>
       {show && <Form />}
+      <div className="show">{myLocalStorageData}</div>
     </div>
   );
 }
