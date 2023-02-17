@@ -1,9 +1,9 @@
 body {
-    background-image: url('./../images/kitchen.jpg');
-    background-size: cover;
-    height: 99vh;
-    background-position: center;
-    position: relative;
+  background-image: url('./../images/kitchen.jpg');
+  background-size: cover;
+  height: 99vh;
+  background-position: center;
+  position: relative;
 }
 
 header {
@@ -52,5 +52,55 @@ span {
 }
 
 .show {
+  width: 80%;
   color: #fff;
+  display: flex;
+  flex-wrap: wrap;
+  margin: auto;
+}
+
+.card {
+  display: flex;
+  align-items: center;
+}
+
+.card__pic {
+  background-color: #ffffffbd;
+  color: black;
+  padding: 5px 15px 0 15px;
+  border-radius: 4px;
+  margin: 20px;
+}
+
+.card__caption {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cards__icons {
+  width: 70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.fa-trash-can {
+  color: red;
+  font-size: 20px;
+}
+
+.fa-eye {
+  color: #4f98eb;
+  font-size: 20px;
+}
+
+.card__image {
+  width: 230px;
+  height: 250px;
+}
+
+img {
+  height: 100%;
+  width: 100%;
 }

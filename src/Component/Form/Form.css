@@ -1,11 +1,18 @@
 form {
-    background-color: rgba(255, 255, 255, 0.261);
+    background-color: rgba(255, 255, 255, 0.878);
     width: 210px;
     min-height: 360px;
     padding-inline: 20px ;
-    position: relative;
-    left: 50%;
-    border-radius: 8px;
+    border-radius: 8px
+}
+
+.formBackground {
+    width: 100vw;
+    height: 45vh;
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .categories {
@@ -20,4 +27,19 @@ form {
     display: flex;
     justify-content: center;
     gap: 10px;
+}
+
+.cancel {
+    background-color: rgb(195 22 22 / 81%);
+    color: #fff;
+    border-radius: 20%;
+    border: 2px solid rgb(195 22 22 / 81%);
+    padding: 5px;
+}
+
+.confirm {
+    color: #fff;
+    border-radius: 20%;
+    background-color: #3838f8da;  
+    border: 2px solid #3838f8da; 
 }
