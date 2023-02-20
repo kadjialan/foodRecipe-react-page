@@ -10,7 +10,31 @@ import './Home.css';
 
 function Home() {
   const { show, setShow, data } = useContext(FormContext);
-  const [see, setSee] = useState(false);
+  const [see, setSee] = useState({});
+  const [display, setDisplay] = useState(true);
+
+  const popUp = (index) => {
+    setDisplay((prev) => !prev);
+
+    /*  console.log(index, display); */
+    const holder = see;
+    holder.index = index;
+    holder.show = display;
+
+    setSee({ ...holder });
+  };
+
+  function erase(index) {
+    const int = data.indexOf(data[index]);
+    console.log(int);
+
+    if (int > -1) {
+      data.splice(int, 1);
+    }
+
+    localStorage.setItem('data_info', JSON.stringify(data));
+  }
+
   return (
     <div className="container">
       <header>
@@ -33,11 +57,11 @@ function Home() {
       </header>
       {show && <Form className="bizarre" />}
       <div className="show">
-        {[...data].map((alan, i) => (
-          <div className="card" key={i}>
+        {[...data].map((alan, index) => (
+          <div className="card" key={index}>
             <div className="card__pic">
               <div className="card__image">
-                <img src={alan.image} alt="food" key={i} />
+                <img src={alan.image} alt="food" />
               </div>
 
               <div className="card__caption">
@@ -46,20 +70,30 @@ function Home() {
                 </div>
 
                 <div className="cards__icons">
-                  <i className="fa-solid fa-eye" onClick={() => setSee(!see)} />
-                  <i className="fa-solid fa-trash-can" />
+                  <i className="fa-solid fa-eye" onClick={() => popUp(index)} />
+                  <i
+                    className="fa-solid fa-trash-can"
+                    onClick={() => erase(index)}
+                  />
                 </div>
               </div>
             </div>
-
-            {see && (
-              <div>
-                <p> {alan.description}</p>
-                <p>{alan.region}</p>
-              </div>
-            )}
           </div>
         ))}
+        <div>
+          {see.show && (
+            <div>
+              <p>
+                <b> ingredients: </b>
+                {data[see.index].description}
+              </p>
+              <p>
+                <b>origin: </b>
+                {data[see.index].region}
+              </p>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
