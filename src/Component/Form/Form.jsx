@@ -1,30 +1,19 @@
 /* eslint-disable no-use-before-define */
-import { useEffect, useContext } from 'react';
+import { useContext } from 'react';
 import { FormContext } from '../../Context';
 import './Form.css';
 
-const charles = () => {
-  const pictures = localStorage.getItem('items');
-  if (pictures) {
-    return JSON.parse(pictures);
-  }
-  return [];
-};
-
-function Form() {
-  const { show, setShow, data, setData } = useContext(FormContext);
+export default function Form1() {
+  const { show, setShow, setData } = useContext(FormContext);
 
   function addItems(e) {
     e.preventDefault();
 
     const change = new FormData(e.currentTarget);
     const images = Object.fromEntries(change.entries());
-    setData((prev) => [...prev, images]);
+    const kadji = { ...images, id: Date.now() };
+    setData((prev) => [...prev, kadji]);
   }
-
-  useEffect(() => {
-    localStorage.setItem('items', JSON.stringify(data));
-  }, [data]);
 
   return (
     <div className="formBackground">
@@ -69,5 +58,3 @@ function Form() {
     </div>
   );
 }
-
-export { Form, charles };
