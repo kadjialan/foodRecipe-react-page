@@ -12,25 +12,14 @@ import { FormContext } from '../Context';
 function Home() {
   const { show, setShow, data, setData } = useContext(FormContext);
   const [see, setSee] = useState({});
-  const [see2, setSee2] = useState({});
   const [display, setDisplay] = useState(true);
-  const [display2, setDisplay2] = useState(false);
+  const [view, setview] = useState(false);
+  const [info, setinfo] = useState();
 
   const popUp = (index) => {
     setDisplay((prev) => !prev);
 
     const holder = see;
-    holder.index = index;
-    holder.show = display;
-
-    setSee({ ...holder });
-  };
-
-  const update = (index) => {
-    console.log(index);
-    setDisplay2((prev) => !prev);
-
-    const holder = see2;
     holder.index = index;
     holder.show = display;
 
@@ -51,7 +40,7 @@ function Home() {
 
   return (
     <div className="container">
-      <header>
+      <div className="head">
         <h1>Food Recipe App</h1>
         <div className="searchHolder">
           <div className="search">
@@ -68,7 +57,7 @@ function Home() {
             ADD
           </button>
         </div>
-      </header>
+      </div>
       {show && <Form1 className="bizarre" />}
       <div className="show">
         {[...data].map((alan, index) => (
@@ -86,7 +75,10 @@ function Home() {
                 <div className="cards__icons">
                   <i
                     className="fa-solid fa-pen-to-square"
-                    onClick={() => update(index)}
+                    onClick={() => {
+                      setview(!view);
+                      setinfo(alan);
+                    }}
                   />
                   <i
                     className="fa-solid fa-trash-can"
@@ -113,13 +105,13 @@ function Home() {
         </div>
       </div>
 
-      {see2.show && (
+      {view && (
         <form className="update">
           <div className="categories">
             <p>
               <b>Name</b>
             </p>
-            <input type="text" defaultValue={data.name} name="name" />
+            <input type="text" defaultValue={info.name} name="name" />
           </div>
           <div className="categories">
             <p>
@@ -127,7 +119,7 @@ function Home() {
             </p>
             <textarea
               type="text"
-              defaultValue={data[see2.index].description}
+              defaultValue={info.description}
               name="description"
             />
           </div>
@@ -135,14 +127,14 @@ function Home() {
             <p>
               <b>Region of origin </b>
             </p>
-            <input type="text" defaultValue={data.region} name="region" />
+            <input type="text" defaultValue={info.region} name="region" />
           </div>
           <div className="form__buttons">
             <button type="submit" className="confirm">
-              cancel
+              update
             </button>
             <button type="button" className="cancel">
-              update
+              cancel
             </button>
           </div>
         </form>

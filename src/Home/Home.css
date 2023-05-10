@@ -6,7 +6,7 @@ body {
   position: relative;
 }
 
-header {
+.head {
   background-color: #bf2217d9;
   color: #fff;
   display: flex;

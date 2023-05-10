@@ -22,25 +22,30 @@ export default function Form1() {
           <p>
             <b>Image name</b>
           </p>
-          <input type="text" placeholder="name" name="name" />
+          <input type="text" placeholder="name" name="name" required />
         </div>
         <div className="categories">
           <p>
             <b>Image url </b>
           </p>
-          <input type="text" placeholder="image" name="image" />
+          <input type="text" placeholder="image" name="image" required />
         </div>
         <div className="categories">
           <p>
             <b>Image ingridients</b>
           </p>
-          <textarea type="text" placeholder="description" name="description" />
+          <textarea
+            type="text"
+            placeholder="description"
+            name="description"
+            required
+          />
         </div>
         <div className="categories">
           <p>
             <b>Region of origin </b>
           </p>
-          <input type="text" placeholder="region" name="region" />
+          <input type="text" placeholder="region" name="region" required />
         </div>
         <div className="form__buttons">
           <button type="submit" className="confirm">

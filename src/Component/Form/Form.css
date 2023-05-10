@@ -1,14 +1,16 @@
 form {
-    background-color: rgba(255, 255, 255, 0.878);
+    background-color: white;
     width: 210px;
     min-height: 360px;
     padding-inline: 20px ;
-    border-radius: 8px
+    border-radius: 8px;
+    margin-bottom:20px ;
 }
 
 .formBackground {
     width: 100vw;
-    height: 45vh;
+    height: 100vh;
+    background-color: rgba(255, 255, 255, 0.564);
     position: fixed;
     display: flex;
     justify-content: center;
