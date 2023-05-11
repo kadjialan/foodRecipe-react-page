@@ -107,6 +107,19 @@ img {
 
 .update {
   position: absolute;
-  bottom: 0;
-  right: 0;
+  top: 0;
+  right: 45%;
+  animation: slideInUp 1s ease-in-out 1;
+  transform: translateY(50%);
+}
+
+@keyframes slideInUp {
+  from {
+    transform: translate3d(0, 0, 0);
+    visibility: visible;
+  }
+
+  to {
+    transform: translate3d(0, 50%, 0);
+  }
 }

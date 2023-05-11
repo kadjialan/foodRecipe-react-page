@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
@@ -26,6 +27,15 @@ function Home() {
     setSee({ ...holder });
   };
 
+  const update = (e) => {
+    e.preventDefault();
+    const change = new FormData(e.currentTarget);
+    const images = Object.fromEntries(change.entries());
+    console.log(images);
+    setinfo(images);
+  };
+  console.log(info);
+
   useEffect(() => {
     localStorage.setItem('items', JSON.stringify(data));
   }, [data]);
@@ -40,6 +50,7 @@ function Home() {
 
   return (
     <div className="container">
+      {show && <Form1 className="bizarre" />}
       <div className="head">
         <h1>Food Recipe App</h1>
         <div className="searchHolder">
@@ -58,7 +69,7 @@ function Home() {
           </button>
         </div>
       </div>
-      {show && <Form1 className="bizarre" />}
+
       <div className="show">
         {[...data].map((alan, index) => (
           <div className="card" key={index}>
@@ -93,8 +104,8 @@ function Home() {
           {see.show && (
             <div>
               <p>
-                <b> ingredients: </b>
-                {data[see.index].description}
+                <b> recipe: </b>
+                {data[see.index].recipe}
               </p>
               <p>
                 <b>origin: </b>
@@ -106,22 +117,31 @@ function Home() {
       </div>
 
       {view && (
-        <form className="update">
+        <form className="update" onSubmit={update}>
           <div className="categories">
             <p>
               <b>Name</b>
             </p>
             <input type="text" defaultValue={info.name} name="name" />
           </div>
+
           <div className="categories">
             <p>
-              <b>ingridients</b>
+              <b>image</b>
             </p>
-            <textarea
+            <input
               type="text"
-              defaultValue={info.description}
-              name="description"
+              defaultValue={info.image}
+              name="image"
+              disabled
             />
+          </div>
+
+          <div className="categories">
+            <p>
+              <b>recipe</b>
+            </p>
+            <textarea type="text" defaultValue={info.recipe} name="recipe" />
           </div>
           <div className="categories">
             <p>
@@ -133,7 +153,11 @@ function Home() {
             <button type="submit" className="confirm">
               update
             </button>
-            <button type="button" className="cancel">
+            <button
+              type="button"
+              className="cancel"
+              onClick={() => setview(false)}
+            >
               cancel
             </button>
           </div>

@@ -13,6 +13,7 @@ export default function Form1() {
     const images = Object.fromEntries(change.entries());
     const kadji = { ...images, id: Date.now() };
     setData((prev) => [...prev, kadji]);
+    setShow(false);
   }
 
   return (
@@ -20,30 +21,25 @@ export default function Form1() {
       <form onSubmit={addItems}>
         <div className="categories">
           <p>
-            <b>Image name</b>
+            <b>Meal name</b>
           </p>
           <input type="text" placeholder="name" name="name" required />
         </div>
         <div className="categories">
           <p>
-            <b>Image url </b>
+            <b>Meal url </b>
           </p>
           <input type="text" placeholder="image" name="image" required />
         </div>
         <div className="categories">
           <p>
-            <b>Image ingridients</b>
+            <b>Meal recipe</b>
           </p>
-          <textarea
-            type="text"
-            placeholder="description"
-            name="description"
-            required
-          />
+          <textarea type="text" placeholder="recipe" name="recipe" required />
         </div>
         <div className="categories">
           <p>
-            <b>Region of origin </b>
+            <b>Meal origin </b>
           </p>
           <input type="text" placeholder="region" name="region" required />
         </div>
