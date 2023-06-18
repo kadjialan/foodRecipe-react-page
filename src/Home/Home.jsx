@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable no-shadow */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
@@ -16,6 +17,15 @@ function Home() {
   const [display, setDisplay] = useState(true);
   const [view, setview] = useState(false);
   const [info, setinfo] = useState();
+  const [inputText, setInputText] = useState('');
+
+  const inputHandler = (e) => {
+    e.preventDefault();
+    const change = new FormData(e.currentTarget);
+    const smallcase = Object.fromEntries(change.entries());
+    setInputText(smallcase);
+    console.log(setInputText);
+  };
 
   const popUp = (index) => {
     setDisplay((prev) => !prev);
@@ -31,10 +41,17 @@ function Home() {
     e.preventDefault();
     const change = new FormData(e.currentTarget);
     const images = Object.fromEntries(change.entries());
-    console.log(images);
-    setinfo(images);
+    const food = data.find((item) => item.id === info.id);
+    const newFood = { ...food, ...images };
+
+    const operation = data.filter((elements, index) => {
+      return elements.id !== newFood.id;
+    });
+
+    operation.unshift(newFood);
+    setData(operation);
+    console.log(operation, data);
   };
-  console.log(info);
 
   useEffect(() => {
     localStorage.setItem('items', JSON.stringify(data));
@@ -50,26 +67,26 @@ function Home() {
 
   return (
     <div className="container">
+      {/* form to add recipe */}
       {show && <Form1 className="bizarre" />}
       <div className="head">
         <h1>Food Recipe App</h1>
         <div className="searchHolder">
-          <div className="search">
+          <form className="search" onSubmit={inputHandler}>
             <input
               type="search"
               placeholder="search your recipe..."
               className="search__input"
             />
             <span>
-              <i className="fa-solid fa-magnifying-glass" />
+              <i className="fa-solid fa-magnifying-glass" type="submit" />
             </span>
-          </div>
+          </form>
           <button type="button" className="add" onClick={() => setShow(!show)}>
             ADD
           </button>
         </div>
       </div>
-
       <div className="show">
         {[...data].map((alan, index) => (
           <div className="card" key={index}>
@@ -91,6 +108,9 @@ function Home() {
                       setinfo(alan);
                     }}
                   />
+
+                  <i className="fa-sharp fa-solid fa-heart" />
+
                   <i
                     className="fa-solid fa-trash-can"
                     onClick={() => erase(alan.id)}
@@ -115,7 +135,7 @@ function Home() {
           )}
         </div>
       </div>
-
+      {/* form to update */}
       {view && (
         <form className="update" onSubmit={update}>
           <div className="categories">
