@@ -18,6 +18,7 @@ function Home() {
   const [view, setview] = useState(false);
   const [info, setinfo] = useState();
   const [isIconClicked, setIsIconClicked] = useState(false);
+  const [showIcons, setShowIcons] = useState({});
   const [search, setSearch] = useState('');
 
   const handleFilter = (event) => {
@@ -27,14 +28,10 @@ function Home() {
   };
 
   const handleClick = (id) => {
-    console.log(id);
-    const favorite = data.filter((elements, index) => {
-      return elements.id === id;
-    });
+    const iconData = showIcons;
+    iconData[`${id}`] = !iconData[`${id}`];
 
-    if (favorite[0].id === id) {
-      setIsIconClicked(!isIconClicked);
-    }
+    setShowIcons({ ...iconData });
   };
 
   const popUp = (index) => {
@@ -66,7 +63,14 @@ function Home() {
 
   useEffect(() => {
     localStorage.setItem('items', JSON.stringify(data));
+    const iconData = {};
+    data.forEach(({ id }) => {
+      iconData[`${id}`] = false;
+    });
+
+    setShowIcons(iconData);
   }, [data]);
+  // console.log(showIcons);
 
   function erase(id) {
     const temp = data.filter((elements, index) => {
@@ -129,7 +133,7 @@ function Home() {
                         />
 
                         <div onClick={() => handleClick(alan.id)}>
-                          {isIconClicked ? (
+                          {showIcons[`${alan.id}`] ? (
                             <i className="fa-solid fa-heart" />
                           ) : (
                             <i className="fa-regular fa-heart" />
@@ -171,7 +175,7 @@ function Home() {
                       />
 
                       <div onClick={() => handleClick(alan.id)}>
-                        {isIconClicked ? (
+                        {showIcons[`${alan.id}`] ? (
                           <i className="fa-solid fa-heart" />
                         ) : (
                           <i className="fa-regular fa-heart" />
