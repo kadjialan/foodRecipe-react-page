@@ -6,6 +6,10 @@ body {
   position: relative;
 }
 
+.container {
+  position: relative;
+}
+
 .head {
   background-color: #bf2217d9;
   color: #fff;
@@ -35,6 +39,12 @@ span {
   gap: 20px;
   align-items: center;
   justify-content: center;
+}
+
+.search-btn {
+  padding: 6.8px 10px;
+  background-color: #fff;
+  border: 1px solid #bcb9b9;
 }
 
 .search {
@@ -113,9 +123,21 @@ img {
 .update {
   position: absolute;
   top: 0;
-  right: 45%;
+  right: 42%;
   animation: slideInUp 1s ease-in-out 1;
   transform: translateY(50%);
+}
+
+.Bg {
+  z-index: 1;
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  background-color: #bcb9b98d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 0;
 }
 
 @keyframes slideInUp {
@@ -127,4 +149,34 @@ img {
   to {
     transform: translate3d(0, 50%, 0);
   }
+}
+
+.details__holder {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-top: 140px;
+  background-color: rgba(0, 0, 0, 0.595);
+  border-radius: 5px;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-right: 20px;
+  padding-left: 20px;
+}
+
+.details div {
+  width: 300px;
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.details__recipe {
+  width: 240px;
+  text-align: left;
 }

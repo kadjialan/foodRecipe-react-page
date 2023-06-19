@@ -54,14 +54,15 @@
 .cancel {
   background-color: rgb(195 22 22 / 81%);
   color: #fff;
-  border-radius: 20%;
+  border-radius: 50px;
   border: 2px solid rgb(195 22 22 / 81%);
-  padding: 5px;
+  padding: 5px 15px;
 }
 
 .confirm {
   color: #fff;
-  border-radius: 20%;
+  border-radius: 50px;
+  padding: 5px 15px;
   background-color: #3838f8da;
   border: 2px solid #3838f8da;
 }

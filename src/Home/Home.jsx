@@ -24,7 +24,6 @@ function Home() {
     event.preventDefault();
     const { target } = event;
     setSearch(target.name.value);
-    console.log(search);
   };
 
   const handleClick = (id) => {
@@ -61,7 +60,8 @@ function Home() {
 
     operation.unshift(newFood);
     setData(operation);
-    console.log(operation, data);
+
+    setTimeout(() => setview((prev) => !prev), 300);
   };
 
   useEffect(() => {
@@ -90,9 +90,9 @@ function Home() {
               className="search__input"
               name="name"
             />
-            <span>
-              <i className="fa-solid fa-magnifying-glass" type="submit" />
-            </span>
+            <button className="search-btn" type="submit">
+              <i className="fa-solid fa-magnifying-glass" />
+            </button>
           </form>
           <button type="button" className="add" onClick={() => setShow(!show)}>
             ADD
@@ -188,68 +188,80 @@ function Home() {
               </div>
             ))}
 
-        <div>
+        <div className="details__holder">
           {see.show && (
-            <div>
-              <p>
-                <b> recipe: </b>
-                {data[see.index].recipe}
-              </p>
-              <p>
-                <b>origin: </b>
-                {data[see.index].region}
-              </p>
+            <div className="details">
+              <div>
+                <p>
+                  <b> Name:</b>
+                </p>
+                <p>{data[see.index].name}</p>
+              </div>
+              <div>
+                <p>
+                  <b> recipe: </b>
+                </p>
+                <p className="details__recipe">{data[see.index].recipe}</p>
+              </div>
+              <div>
+                <p>
+                  <b>origin: </b>
+                </p>
+                <p>{data[see.index].region}</p>
+              </div>
             </div>
           )}
         </div>
       </div>
       {/* form to update */}
       {view && (
-        <form className="update" onSubmit={update}>
-          <div className="categories">
-            <p>
-              <b>Name</b>
-            </p>
-            <input type="text" defaultValue={info.name} name="name" />
-          </div>
+        <div className="Bg">
+          <form className="update" onSubmit={update}>
+            <div className="categories">
+              <p>
+                <b>Name</b>
+              </p>
+              <input type="text" defaultValue={info.name} name="name" />
+            </div>
 
-          <div className="categories">
-            <p>
-              <b>image</b>
-            </p>
-            <input
-              type="text"
-              defaultValue={info.image}
-              name="image"
-              disabled
-            />
-          </div>
+            <div className="categories">
+              <p>
+                <b>image</b>
+              </p>
+              <input
+                type="text"
+                defaultValue={info.image}
+                name="image"
+                disabled
+              />
+            </div>
 
-          <div className="categories">
-            <p>
-              <b>recipe</b>
-            </p>
-            <textarea type="text" defaultValue={info.recipe} name="recipe" />
-          </div>
-          <div className="categories">
-            <p>
-              <b>Region of origin </b>
-            </p>
-            <input type="text" defaultValue={info.region} name="region" />
-          </div>
-          <div className="form__buttons">
-            <button type="submit" className="confirm">
-              update
-            </button>
-            <button
-              type="button"
-              className="cancel"
-              onClick={() => setview(false)}
-            >
-              cancel
-            </button>
-          </div>
-        </form>
+            <div className="categories">
+              <p>
+                <b>recipe</b>
+              </p>
+              <textarea type="text" defaultValue={info.recipe} name="recipe" />
+            </div>
+            <div className="categories">
+              <p>
+                <b>Region of origin </b>
+              </p>
+              <input type="text" defaultValue={info.region} name="region" />
+            </div>
+            <div className="form__buttons">
+              <button type="submit" className="confirm">
+                update
+              </button>
+              <button
+                type="button"
+                className="cancel"
+                onClick={() => setview(false)}
+              >
+                cancel
+              </button>
+            </div>
+          </form>
+        </div>
       )}
     </div>
   );
