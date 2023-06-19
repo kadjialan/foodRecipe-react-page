@@ -17,14 +17,25 @@ function Home() {
   const [display, setDisplay] = useState(true);
   const [view, setview] = useState(false);
   const [info, setinfo] = useState();
-  const [inputText, setInputText] = useState('');
+  const [isIconClicked, setIsIconClicked] = useState(false);
+  const [search, setSearch] = useState('');
 
-  const inputHandler = (e) => {
-    e.preventDefault();
-    const change = new FormData(e.currentTarget);
-    const smallcase = Object.fromEntries(change.entries());
-    setInputText(smallcase);
-    console.log(setInputText);
+  const handleFilter = (event) => {
+    event.preventDefault();
+    const { target } = event;
+    setSearch(target.name.value);
+    console.log(search);
+  };
+
+  const handleClick = (id) => {
+    console.log(id);
+    const favorite = data.filter((elements, index) => {
+      return elements.id === id;
+    });
+
+    if (favorite[0].id === id) {
+      setIsIconClicked(!isIconClicked);
+    }
   };
 
   const popUp = (index) => {
@@ -72,11 +83,12 @@ function Home() {
       <div className="head">
         <h1>Food Recipe App</h1>
         <div className="searchHolder">
-          <form className="search" onSubmit={inputHandler}>
+          <form className="search" onSubmit={handleFilter}>
             <input
               type="search"
               placeholder="search your recipe..."
               className="search__input"
+              name="name"
             />
             <span>
               <i className="fa-solid fa-magnifying-glass" type="submit" />
@@ -88,38 +100,94 @@ function Home() {
         </div>
       </div>
       <div className="show">
-        {[...data].map((alan, index) => (
-          <div className="card" key={index}>
-            <div className="card__pic">
-              <div className="card__image">
-                <img src={alan.image} alt="food" onClick={() => popUp(index)} />
-              </div>
+        {search !== ''
+          ? data
+              .filter((list) => list.name === search)
+              .map((alan, index) => (
+                <div className="card" key={index}>
+                  <div className="card__pic">
+                    <div className="card__image">
+                      <img
+                        src={alan.image}
+                        alt="food"
+                        onClick={() => popUp(index)}
+                      />
+                    </div>
 
-              <div className="card__caption">
-                <div>
-                  <h3>{alan.name}</h3>
+                    <div className="card__caption">
+                      <div>
+                        <h3>{alan.name}</h3>
+                      </div>
+
+                      <div className="cards__icons">
+                        <i
+                          className="fa-solid fa-pen-to-square"
+                          onClick={() => {
+                            setview(!view);
+                            setinfo(alan);
+                          }}
+                        />
+
+                        <div onClick={() => handleClick(alan.id)}>
+                          {isIconClicked ? (
+                            <i className="fa-solid fa-heart" />
+                          ) : (
+                            <i className="fa-regular fa-heart" />
+                          )}
+                        </div>
+
+                        <i
+                          className="fa-solid fa-trash-can"
+                          onClick={() => erase(alan.id)}
+                        />
+                      </div>
+                    </div>
+                  </div>
                 </div>
+              ))
+          : [...data].map((alan, index) => (
+              <div className="card" key={index}>
+                <div className="card__pic">
+                  <div className="card__image">
+                    <img
+                      src={alan.image}
+                      alt="food"
+                      onClick={() => popUp(index)}
+                    />
+                  </div>
 
-                <div className="cards__icons">
-                  <i
-                    className="fa-solid fa-pen-to-square"
-                    onClick={() => {
-                      setview(!view);
-                      setinfo(alan);
-                    }}
-                  />
+                  <div className="card__caption">
+                    <div>
+                      <h3>{alan.name}</h3>
+                    </div>
 
-                  <i className="fa-sharp fa-solid fa-heart" />
+                    <div className="cards__icons">
+                      <i
+                        className="fa-solid fa-pen-to-square"
+                        onClick={() => {
+                          setview(!view);
+                          setinfo(alan);
+                        }}
+                      />
 
-                  <i
-                    className="fa-solid fa-trash-can"
-                    onClick={() => erase(alan.id)}
-                  />
+                      <div onClick={() => handleClick(alan.id)}>
+                        {isIconClicked ? (
+                          <i className="fa-solid fa-heart" />
+                        ) : (
+                          <i className="fa-regular fa-heart" />
+                        )}
+                      </div>
+
+                      <i
+                        className="fa-solid fa-trash-can"
+                        onClick={() => erase(alan.id)}
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
-        ))}
+            ))}
+
         <div>
           {see.show && (
             <div>

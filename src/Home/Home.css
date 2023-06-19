@@ -79,7 +79,7 @@ span {
 }
 
 .cards__icons {
-  width: 70px;
+  width: 90px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -91,6 +91,11 @@ span {
 }
 
 .fa-pen-to-square {
+  color: #4f98eb;
+  font-size: 20px;
+}
+
+.fa-heart {
   color: #4f98eb;
   font-size: 20px;
 }
