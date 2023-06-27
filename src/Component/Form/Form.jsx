@@ -1,17 +1,16 @@
-/* eslint-disable no-use-before-define */
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { FormContext } from '../../Context';
 import './Form.css';
 
 export default function Form1() {
   const { show, setShow, setData } = useContext(FormContext);
-
+  const [favorite] = useState('false');
   function addItems(e) {
     e.preventDefault();
 
     const change = new FormData(e.currentTarget);
     const images = Object.fromEntries(change.entries());
-    const kadji = { ...images, id: Date.now() };
+    const kadji = { ...images, id: Date.now(), favorite };
     setData((prev) => [...prev, kadji]);
     setShow(false);
   }

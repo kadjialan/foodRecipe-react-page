@@ -1,10 +1,5 @@
-/* eslint-disable no-console */
-/* eslint-disable no-shadow */
-/* eslint-disable react/no-array-index-key */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable no-unused-vars */
 import { useContext, useEffect, useState } from 'react';
 
 import Form1 from '../Component/Form/Form';
@@ -17,7 +12,6 @@ function Home() {
   const [display, setDisplay] = useState(true);
   const [view, setview] = useState(false);
   const [info, setinfo] = useState();
-  const [isIconClicked, setIsIconClicked] = useState(false);
   const [showIcons, setShowIcons] = useState({});
   const [search, setSearch] = useState('');
 
@@ -51,7 +45,7 @@ function Home() {
     const food = data.find((item) => item.id === info.id);
     const newFood = { ...food, ...images };
 
-    const operation = data.filter((elements, index) => {
+    const operation = data.filter((elements) => {
       return elements.id !== newFood.id;
     });
 
@@ -70,14 +64,12 @@ function Home() {
 
     setShowIcons(iconData);
   }, [data]);
-  // console.log(showIcons);
 
   function erase(id) {
-    const temp = data.filter((elements, index) => {
+    const temp = data.filter((elements) => {
       return elements.id !== id;
     });
     setData(temp);
-    console.log(temp, data);
   }
 
   return (
@@ -108,10 +100,11 @@ function Home() {
           ? data
               .filter((list) => list.name === search)
               .map((alan, index) => (
-                <div className="card" key={index}>
+                <div className="card" key={alan.id}>
                   <div className="card__pic">
                     <div className="card__image">
                       <img
+                        role="presentation"
                         src={alan.image}
                         alt="food"
                         onClick={() => popUp(index)}
@@ -150,10 +143,11 @@ function Home() {
                 </div>
               ))
           : [...data].map((alan, index) => (
-              <div className="card" key={index}>
+              <div className="card" key={alan.id}>
                 <div className="card__pic">
                   <div className="card__image">
                     <img
+                      role="presentation"
                       src={alan.image}
                       alt="food"
                       onClick={() => popUp(index)}
