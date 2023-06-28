@@ -62,10 +62,11 @@ span {
 }
 
 .show {
-  width: 80%;
+  width: 95%;
   color: #fff;
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   margin: auto;
 }
 
@@ -111,8 +112,8 @@ span {
 }
 
 .card__image {
-  width: 230px;
-  height: 250px;
+  width: 284px;
+  height: 288px;
 }
 
 img {
@@ -123,7 +124,6 @@ img {
 .update {
   position: absolute;
   top: 0;
-  right: 42%;
   animation: slideInUp 1s ease-in-out 1;
   transform: translateY(50%);
 }
@@ -179,4 +179,14 @@ img {
 .details__recipe {
   width: 240px;
   text-align: left;
+}
+
+@media screen and (max-width: 320px) {
+  .card__pic {
+    margin: 20px 0;
+  }
+
+  .search__input {
+    font-size: 16px;
+  }
 }

@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 import { useContext, useEffect, useState } from 'react';
 
 import Form1 from '../Component/Form/Form';
@@ -123,9 +121,10 @@ function Home() {
                             setview(!view);
                             setinfo(alan);
                           }}
+                          aria-hidden
                         />
 
-                        <div onClick={() => handleClick(alan.id)}>
+                        <div onClick={() => handleClick(alan.id)} aria-hidden>
                           {showIcons[`${alan.id}`] ? (
                             <i className="fa-solid fa-heart" />
                           ) : (
@@ -136,6 +135,7 @@ function Home() {
                         <i
                           className="fa-solid fa-trash-can"
                           onClick={() => erase(alan.id)}
+                          aria-hidden
                         />
                       </div>
                     </div>
@@ -166,9 +166,10 @@ function Home() {
                           setview(!view);
                           setinfo(alan);
                         }}
+                        aria-hidden
                       />
 
-                      <div onClick={() => handleClick(alan.id)}>
+                      <div onClick={() => handleClick(alan.id)} aria-hidden>
                         {showIcons[`${alan.id}`] ? (
                           <i className="fa-solid fa-heart" />
                         ) : (
@@ -179,6 +180,7 @@ function Home() {
                       <i
                         className="fa-solid fa-trash-can"
                         onClick={() => erase(alan.id)}
+                        aria-hidden
                       />
                     </div>
                   </div>
