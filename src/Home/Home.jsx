@@ -8,6 +8,7 @@ function Home() {
   const { show, setShow, data, setData } = useContext(FormContext);
   const [see, setSee] = useState({});
   const [display, setDisplay] = useState(true);
+  const [favorite, setFavorite] = useState(true);
   const [view, setview] = useState(false);
   const [info, setinfo] = useState();
   const [showIcons, setShowIcons] = useState({});
@@ -20,6 +21,25 @@ function Home() {
   };
 
   const handleClick = (id) => {
+    const findOdj = data.find((index) => {
+      return index.id === id;
+    });
+
+    if (findOdj.favorite === true) {
+      findOdj.favorite = false;
+    } else {
+      findOdj.favorite = true;
+    }
+    setFavorite(findOdj.favorite);
+
+    const filtered = data.filter((value) => {
+      return value.id !== id;
+    });
+
+    const update = [...filtered, findOdj];
+
+    localStorage.setItem('items', JSON.stringify(update));
+
     const iconData = showIcons;
     iconData[`${id}`] = !iconData[`${id}`];
 
@@ -61,7 +81,7 @@ function Home() {
     });
 
     setShowIcons(iconData);
-  }, [data]);
+  }, [data, favorite]);
 
   function erase(id) {
     const temp = data.filter((elements) => {
@@ -170,7 +190,7 @@ function Home() {
                       />
 
                       <div onClick={() => handleClick(alan.id)} aria-hidden>
-                        {showIcons[`${alan.id}`] ? (
+                        {showIcons[`${alan.id}`] || alan.favorite === true ? (
                           <i className="fa-solid fa-heart" />
                         ) : (
                           <i className="fa-regular fa-heart" />

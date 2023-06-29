@@ -1,16 +1,17 @@
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { FormContext } from '../../Context';
 import './Form.css';
 
 export default function Form1() {
   const { show, setShow, setData } = useContext(FormContext);
-  const [favorite] = useState('false');
   function addItems(e) {
     e.preventDefault();
+    const favorite = false;
+    const id = Date.now();
 
     const change = new FormData(e.currentTarget);
     const images = Object.fromEntries(change.entries());
-    const kadji = { ...images, id: Date.now(), favorite };
+    const kadji = { ...images, id, favorite };
     setData((prev) => [...prev, kadji]);
     setShow(false);
   }
