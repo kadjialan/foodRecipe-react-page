@@ -3,9 +3,11 @@ import { useContext, useEffect, useState } from 'react';
 import Form1 from '../Component/Form/Form';
 import './Home.css';
 import { FormContext } from '../Context';
+import Modal from '../Component/deleteModal/Modal';
 
 function Home() {
-  const { show, setShow, data, setData } = useContext(FormContext);
+  const { show, setShow, data, setData, deleteIdem, setDeleteIdem, setNumb } =
+    useContext(FormContext);
   const [see, setSee] = useState({});
   const [display, setDisplay] = useState(true);
   const [favorite, setFavorite] = useState(true);
@@ -83,15 +85,9 @@ function Home() {
     setShowIcons(iconData);
   }, [data, favorite]);
 
-  function erase(id) {
-    const temp = data.filter((elements) => {
-      return elements.id !== id;
-    });
-    setData(temp);
-  }
-
   return (
     <div className="container">
+      {deleteIdem && <Modal />}
       {/* form to add recipe */}
       {show && <Form1 className="bizarre" />}
       <div className="head">
@@ -154,7 +150,11 @@ function Home() {
 
                         <i
                           className="fa-solid fa-trash-can"
-                          onClick={() => erase(alan.id)}
+                          /* onClick={() => erase(alan.id)} */
+                          onClick={() => {
+                            setDeleteIdem(!deleteIdem);
+                            setNumb(alan.id);
+                          }}
                           aria-hidden
                         />
                       </div>
@@ -199,7 +199,11 @@ function Home() {
 
                       <i
                         className="fa-solid fa-trash-can"
-                        onClick={() => erase(alan.id)}
+                        /* onClick={() => erase(alan.id)} */
+                        onClick={() => {
+                          setDeleteIdem(!deleteIdem);
+                          setNumb(alan.id);
+                        }}
                         aria-hidden
                       />
                     </div>

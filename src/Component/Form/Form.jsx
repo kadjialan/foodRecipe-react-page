@@ -23,25 +23,49 @@ export default function Form1() {
           <p>
             <b>Meal name</b>
           </p>
-          <input type="text" placeholder="name" name="name" required />
+          <input
+            type="text"
+            placeholder="name"
+            name="name"
+            autoComplete="off"
+            required
+          />
         </div>
         <div className="categories">
           <p>
             <b>Meal url </b>
           </p>
-          <input type="text" placeholder="image" name="image" required />
+          <input
+            type="text"
+            placeholder="image"
+            name="image"
+            autoComplete="off"
+            required
+          />
         </div>
         <div className="categories">
           <p>
             <b>Meal recipe</b>
           </p>
-          <textarea type="text" placeholder="recipe" name="recipe" required />
+          <textarea
+            type="text"
+            placeholder="recipe"
+            name="recipe"
+            autoComplete="off"
+            required
+          />
         </div>
         <div className="categories">
           <p>
             <b>Meal origin </b>
           </p>
-          <input type="text" placeholder="region" name="region" required />
+          <input
+            type="text"
+            placeholder="region"
+            name="region"
+            autoComplete="off"
+            required
+          />
         </div>
         <div className="form__buttons">
           <button type="submit" className="confirm">
