@@ -12,7 +12,9 @@ const store = () => {
 };
 
 function App() {
+  const [info, setinfo] = useState();
   const [show, setShow] = useState(false);
+  const [view, setview] = useState(false);
   const [numb, setNumb] = useState();
   const [data, setData] = useState(store);
   const [deleteIdem, setDeleteIdem] = useState(false);
@@ -28,6 +30,10 @@ function App() {
           setDeleteIdem,
           numb,
           setNumb,
+          info,
+          setinfo,
+          view,
+          setview,
         }}
       >
         <Home />

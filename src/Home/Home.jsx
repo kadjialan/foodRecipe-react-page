@@ -4,15 +4,23 @@ import './Home.css';
 import { FormContext } from '../Context';
 import Modal from '../Component/deleteModal/Modal';
 import Form1 from '../Component/addForm/Form';
+import Form from '../Component/updateForm/Form';
 
 function Home() {
-  const { show, setShow, data, setData, deleteIdem, setDeleteIdem, setNumb } =
-    useContext(FormContext);
+  const {
+    show,
+    setShow,
+    data,
+    deleteIdem,
+    setDeleteIdem,
+    setNumb,
+    view,
+    setview,
+    setinfo,
+  } = useContext(FormContext);
   const [see, setSee] = useState({});
   const [display, setDisplay] = useState(true);
   const [favorite, setFavorite] = useState(true);
-  const [view, setview] = useState(false);
-  const [info, setinfo] = useState();
   const [showIcons, setShowIcons] = useState({});
   const [search, setSearch] = useState('');
 
@@ -58,23 +66,6 @@ function Home() {
     setSee({ ...holder });
   };
 
-  const update = (e) => {
-    e.preventDefault();
-    const change = new FormData(e.currentTarget);
-    const images = Object.fromEntries(change.entries());
-    const food = data.find((item) => item.id === info.id);
-    const newFood = { ...food, ...images };
-
-    const operation = data.filter((elements) => {
-      return elements.id !== newFood.id;
-    });
-
-    operation.unshift(newFood);
-    setData(operation);
-
-    setTimeout(() => setview((prev) => !prev), 300);
-  };
-
   useEffect(() => {
     localStorage.setItem('items', JSON.stringify(data));
     const iconData = {};
@@ -88,8 +79,10 @@ function Home() {
   return (
     <div className="container">
       {deleteIdem && <Modal />}
+
       {/* form to add recipe */}
       {show && <Form1 className="bizarre" />}
+
       <div className="head">
         <h1>Food Recipe App</h1>
         <div className="searchHolder">
@@ -150,7 +143,6 @@ function Home() {
 
                         <i
                           className="fa-solid fa-trash-can"
-                          /* onClick={() => erase(alan.id)} */
                           onClick={() => {
                             setDeleteIdem(!deleteIdem);
                             setNumb(alan.id);
@@ -183,8 +175,8 @@ function Home() {
                       <i
                         className="fa-solid fa-pen-to-square"
                         onClick={() => {
-                          setview(!view);
                           setinfo(alan);
+                          setview(!view);
                         }}
                         aria-hidden
                       />
@@ -199,7 +191,6 @@ function Home() {
 
                       <i
                         className="fa-solid fa-trash-can"
-                        /* onClick={() => erase(alan.id)} */
                         onClick={() => {
                           setDeleteIdem(!deleteIdem);
                           setNumb(alan.id);
@@ -237,56 +228,9 @@ function Home() {
           )}
         </div>
       </div>
+
       {/* form to update */}
-      {view && (
-        <div className="Bg">
-          <form className="update" onSubmit={update}>
-            <div className="categories">
-              <p>
-                <b>Name</b>
-              </p>
-              <input type="text" defaultValue={info.name} name="name" />
-            </div>
-
-            <div className="categories">
-              <p>
-                <b>image</b>
-              </p>
-              <input
-                type="text"
-                defaultValue={info.image}
-                name="image"
-                disabled
-              />
-            </div>
-
-            <div className="categories">
-              <p>
-                <b>recipe</b>
-              </p>
-              <textarea type="text" defaultValue={info.recipe} name="recipe" />
-            </div>
-            <div className="categories">
-              <p>
-                <b>Region of origin </b>
-              </p>
-              <input type="text" defaultValue={info.region} name="region" />
-            </div>
-            <div className="form__buttons">
-              <button type="submit" className="confirm">
-                update
-              </button>
-              <button
-                type="button"
-                className="cancel"
-                onClick={() => setview(false)}
-              >
-                cancel
-              </button>
-            </div>
-          </form>
-        </div>
-      )}
+      {view && <Form />}
     </div>
   );
 }

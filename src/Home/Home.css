@@ -144,25 +144,6 @@ img:hover {
   filter: brightness(1);
 }
 
-.update {
-  position: absolute;
-  top: 0;
-  animation: slideInUp 1s ease-in-out 1;
-  transform: translateY(50%);
-}
-
-.Bg {
-  z-index: 1;
-  position: absolute;
-  width: 100vw;
-  height: 100vh;
-  background-color: #bcb9b98d;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  top: 0;
-}
-
 @keyframes slideInUp {
   from {
     transform: translate3d(0, 0, 0);
