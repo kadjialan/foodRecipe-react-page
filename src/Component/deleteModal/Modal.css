@@ -16,6 +16,7 @@
   border-radius: 5px;
   animation: slideInUp 1s ease-in-out 1;
   transform: translateY(50%);
+  font-family: 'inter';
 }
 
 @keyframes slideInUp {
@@ -89,14 +90,16 @@
   margin: 0 5px;
 }
 .modal-confirm .btn-secondary {
-  background: #c1c1c1;
+  background: rgba(0, 0, 0, 0.818);
+  cursor: pointer;
 }
 .modal-confirm .btn-secondary:hover,
 .modal-confirm .btn-secondary:focus {
-  background: #a8a8a8;
+  background: rgba(0, 0, 0, 0.544);
 }
 .modal-confirm .btn-danger {
   background: #f15e5e;
+  cursor: pointer;
 }
 .modal-confirm .btn-danger:hover,
 .modal-confirm .btn-danger:focus {
