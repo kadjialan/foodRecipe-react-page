@@ -1,9 +1,9 @@
 import { useContext, useEffect, useState } from 'react';
 
-import Form1 from '../Component/Form/Form';
 import './Home.css';
 import { FormContext } from '../Context';
 import Modal from '../Component/deleteModal/Modal';
+import Form1 from '../Component/addForm/Form';
 
 function Home() {
   const { show, setShow, data, setData, deleteIdem, setDeleteIdem, setNumb } =

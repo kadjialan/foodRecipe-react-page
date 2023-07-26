@@ -1,11 +1,10 @@
 .delete-form {
   position: absolute;
   display: flex;
-  align-items: center;
   justify-content: center;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.203);
+  width: 99.5vw;
+  height: 99vh;
+  background-color: rgba(0, 0, 0, 0.095);
   z-index: 1;
 }
 
@@ -13,8 +12,23 @@
   color: #636363;
   width: 400px;
   background-color: #fff;
+  border: 1px solid black;
   border-radius: 5px;
+  animation: slideInUp 1s ease-in-out 1;
+  transform: translateY(50%);
 }
+
+@keyframes slideInUp {
+  from {
+    transform: translate3d(0, 0, 0);
+    visibility: visible;
+  }
+
+  to {
+    transform: translate3d(0, 50%, 0);
+  }
+}
+
 .modal-confirm .modal-content {
   padding: 20px;
   border-radius: 5px;

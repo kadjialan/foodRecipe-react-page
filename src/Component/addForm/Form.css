@@ -7,6 +7,7 @@
   border-radius: 8px;
   border-style: double;
   border-color: aliceblue;
+  z-index: 1;
 }
 
 .update input,
@@ -35,6 +36,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1;
 }
 
 .categories {
@@ -57,6 +59,7 @@
   border-radius: 50px;
   border: 2px solid rgb(195 22 22 / 81%);
   padding: 5px 15px;
+  cursor: pointer;
 }
 
 .confirm {
@@ -65,4 +68,5 @@
   padding: 5px 15px;
   background-color: #3838f8da;
   border: 2px solid #3838f8da;
+  cursor: pointer;
 }

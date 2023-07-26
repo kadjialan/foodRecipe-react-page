@@ -11,8 +11,8 @@ export default function Form1() {
 
     const change = new FormData(e.currentTarget);
     const images = Object.fromEntries(change.entries());
-    const kadji = { ...images, id, favorite };
-    setData((prev) => [...prev, kadji]);
+    const imagesInfo = { ...images, id, favorite };
+    setData((prev) => [...prev, imagesInfo]);
     setShow(false);
   }
 
@@ -47,13 +47,7 @@ export default function Form1() {
           <p>
             <b>Meal recipe</b>
           </p>
-          <textarea
-            type="text"
-            placeholder="recipe"
-            name="recipe"
-            autoComplete="off"
-            required
-          />
+          <textarea type="text" placeholder="recipe" name="recipe" required />
         </div>
         <div className="categories">
           <p>
