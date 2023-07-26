@@ -1,17 +1,27 @@
 body {
-    background-image: url('./../images/kitchen.jpg');
-    background-size: cover;
-    height: 99vh;
-    background-position: center;
-    position: relative;
+  background-image: url('./../images/kitchen.jpg');
+  background-size: cover;
+  height: 100vh;
+  background-repeat: no-repeat;
+  background-position: center;
+  position: relative;
 }
 
-header {
+.container {
+  position: relative;
+}
+
+.head {
   background-color: #bf2217d9;
   color: #fff;
   display: flex;
   flex-direction: column;
-  min-height: 140px;
+  min-height: 150px;
+}
+
+.head h1 {
+  font-family: sans-serif;
+  font-size: 40px;
 }
 
 .search__input {
@@ -37,6 +47,12 @@ span {
   justify-content: center;
 }
 
+.search-btn {
+  padding: 6.8px 10px;
+  background-color: #fff;
+  border: 1px solid #bcb9b9;
+}
+
 .search {
   display: flex;
   justify-content: center;
@@ -49,8 +65,133 @@ span {
   color: #fff;
   border: 1px solid #4f98eb;
   border-radius: 3px;
+  cursor: pointer;
 }
 
 .show {
+  width: 95%;
   color: #fff;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: auto;
+}
+
+.card {
+  display: flex;
+  align-items: center;
+}
+
+.card__pic {
+  background-color: #ffffffbd;
+  color: black;
+  padding: 15px 15px 0 15px;
+  border-radius: 8px;
+  margin: 20px;
+  border: 2px solid #241a1af3;
+}
+
+.card__caption {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card__caption h3 {
+  font-family: auto;
+  font-size: 20px;
+}
+
+.cards__icons {
+  width: 90px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.fa-trash-can {
+  color: red;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.fa-pen-to-square {
+  color: #4f98eb;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.fa-heart {
+  color: #4f98eb;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.card__image {
+  width: 284px;
+  height: 288px;
+}
+
+img {
+  height: 100%;
+  width: 100%;
+  cursor: pointer;
+  filter: brightness(0.5);
+  transition: 0.5s;
+  border-radius: 8px;
+}
+
+img:hover {
+  filter: brightness(1);
+}
+
+@keyframes slideInUp {
+  from {
+    transform: translate3d(0, 0, 0);
+    visibility: visible;
+  }
+
+  to {
+    transform: translate3d(0, 50%, 0);
+  }
+}
+
+.details__holder {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-top: 150px;
+  background-color: rgba(0, 0, 0, 0.595);
+  border-radius: 5px;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-right: 20px;
+  padding-left: 20px;
+}
+
+.details div {
+  width: 300px;
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.details__recipe {
+  width: 240px;
+  text-align: left;
+}
+
+@media screen and (max-width: 320px) {
+  .card__pic {
+    margin: 20px 0;
+  }
+
+  .search__input {
+    font-size: 16px;
+  }
 }
