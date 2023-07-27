@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import './App.css';
-import Home from './Home/Home';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+/* import Home from './pages/Home/Home'; */
+import Landing from './pages/landing/Landing';
 import { FormProvider } from './Context';
 
 const store = () => {
@@ -36,7 +38,11 @@ function App() {
           setview,
         }}
       >
-        <Home />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Landing />} />
+          </Routes>
+        </BrowserRouter>
       </FormProvider>
     </div>
   );

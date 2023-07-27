@@ -1,5 +1,5 @@
 body {
-  background-image: url('./../images/kitchen.jpg');
+  background-image: url('../../images/kitchen.jpg');
   background-size: cover;
   height: 100vh;
   background-repeat: no-repeat;

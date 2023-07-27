@@ -1,10 +1,10 @@
 import { useContext, useEffect, useState } from 'react';
 
 import './Home.css';
-import { FormContext } from '../Context';
-import Modal from '../Component/deleteModal/Modal';
-import Form1 from '../Component/addForm/Form';
-import Form from '../Component/updateForm/Form';
+import { FormContext } from '../../Context';
+import Modal from '../../Component/deleteModal/Modal';
+import Form1 from '../../Component/addForm/Form';
+import Form from '../../Component/updateForm/Form';
 
 function Home() {
   const {
