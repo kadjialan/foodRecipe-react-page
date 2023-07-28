@@ -10,4 +10,13 @@
   background-repeat: no-repeat;
   height: 100vh;
   overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
 }
+
+.landing-container h1 {
+  font-size: 48px;
+  font-style: oblique;
+  color: #fff;
+}
+
