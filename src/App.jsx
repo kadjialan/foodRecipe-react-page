@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-/* import Home from './pages/Home/Home'; */
-import Landing from './pages/landing/Landing';
+import Home from './pages/Home/Home';
+/* import Landing from './pages/landing/Landing'; */
 import { FormProvider } from './Context';
 
 const store = () => {
@@ -40,7 +40,7 @@ function App() {
       >
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Landing />} />
+            <Route path="/" element={<Home />} />
           </Routes>
         </BrowserRouter>
       </FormProvider>

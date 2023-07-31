@@ -13,6 +13,8 @@ function landing() {
         </li>
         <li>A recipe should contain</li>
       </ul>
+
+      <button type="button">Get started</button>
     </div>
   );
 }
