@@ -1,15 +1,18 @@
 import React from 'react';
-import { Clock, Users, ChefHat, Edit, Trash2 } from 'lucide-react';
+import { Clock, Users, ChefHat, Edit, Trash2, Heart, Share2 } from 'lucide-react';
 import { Recipe } from '../types/Recipe';
+import { StarRating } from './StarRating';
 
 interface RecipeCardProps {
   recipe: Recipe;
   onEdit: (recipe: Recipe) => void;
   onDelete: (recipe: Recipe) => void;
   onView: (recipe: Recipe) => void;
+  onToggleFavorite: (recipe: Recipe) => void;
+  onShare: (recipe: Recipe) => void;
 }
 
-export const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, onEdit, onDelete, onView }) => {
+export const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, onEdit, onDelete, onView, onToggleFavorite, onShare }) => {
   const getCategoryColor = (category: string) => {
     const colors = [
       'bg-blue-100 text-blue-800',
@@ -67,8 +70,21 @@ export const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, onEdit, onDelete
             <h3 className="text-xl font-bold text-white mb-1 truncate">{recipe.name}</h3>
             <p className="text-white text-opacity-90 text-sm line-clamp-2">{recipe.description}</p>
           </div>
-          <div className="absolute top-4 right-4">
-            <span className={`px-3 py-1 rounded-full text-xs font-medium ${getDifficultyColor(recipe.difficulty)}`}>
+          <div className="absolute top-4 left-4 right-4 flex justify-between items-start">
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onToggleFavorite(recipe);
+              }}
+              className={`p-2 rounded-full backdrop-blur-sm transition-all ${
+                recipe.isFavorite
+                  ? 'bg-red-500 text-white'
+                  : 'bg-white bg-opacity-20 text-white hover:bg-opacity-30'
+              }`}
+            >
+              <Heart className={`w-5 h-5 ${recipe.isFavorite ? 'fill-current' : ''}`} />
+            </button>
+            <span className={`px-3 py-1 rounded-full text-xs font-medium ${getDifficultyColor(recipe.difficulty)} backdrop-blur-sm`}>
               {recipe.difficulty}
             </span>
           </div>
@@ -101,30 +117,47 @@ export const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, onEdit, onDelete
             )}
           </div>
           
+          <div className="mb-4">
+            <StarRating rating={recipe.rating} readonly size="sm" />
+          </div>
+
           <div className="text-sm text-gray-500 mb-4">
             <strong>{recipe.ingredients.length}</strong> ingredients • <strong>{recipe.instructions.length}</strong> steps
           </div>
         </div>
       </div>
       
-      <div className="px-6 pb-6 flex justify-between">
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            onEdit(recipe);
-          }}
-          className="flex items-center space-x-2 px-4 py-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors"
-        >
-          <Edit className="w-4 h-4" />
-          <span>Edit</span>
-        </button>
-        
+      <div className="px-6 pb-6 flex justify-between items-center">
+        <div className="flex space-x-2">
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              onEdit(recipe);
+            }}
+            className="flex items-center space-x-2 px-3 py-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors"
+          >
+            <Edit className="w-4 h-4" />
+            <span>Edit</span>
+          </button>
+
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              onShare(recipe);
+            }}
+            className="flex items-center space-x-2 px-3 py-2 bg-green-50 text-green-600 rounded-lg hover:bg-green-100 transition-colors"
+          >
+            <Share2 className="w-4 h-4" />
+            <span>Share</span>
+          </button>
+        </div>
+
         <button
           onClick={(e) => {
             e.stopPropagation();
             onDelete(recipe);
           }}
-          className="flex items-center space-x-2 px-4 py-2 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition-colors"
+          className="flex items-center space-x-2 px-3 py-2 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition-colors"
         >
           <Trash2 className="w-4 h-4" />
           <span>Delete</span>

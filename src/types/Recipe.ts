@@ -8,8 +8,11 @@ export interface Recipe {
   cookTime: number;
   servings: number;
   category: string;
+  difficulty: 'Easy' | 'Medium' | 'Hard';
+  rating: number; // 1-5 stars
   image?: string;
   tags: string[];
+  isFavorite: boolean;
   createdAt: Date;
   updatedAt: Date;
 }

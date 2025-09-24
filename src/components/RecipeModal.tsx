@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { X, Plus, Minus } from 'lucide-react';
 import { Recipe } from '../types/Recipe';
+import { StarRating } from './StarRating';
+import { ImageUpload } from './ImageUpload';
 
 interface RecipeModalProps {
   isOpen: boolean;
@@ -26,6 +28,9 @@ export const RecipeModal: React.FC<RecipeModalProps> = ({
     cookTime: 30,
     servings: 4,
     category: '',
+    difficulty: 'Medium' as 'Easy' | 'Medium' | 'Hard',
+    rating: 0,
+    isFavorite: false,
     image: '',
     tags: [''],
   });
@@ -41,6 +46,9 @@ export const RecipeModal: React.FC<RecipeModalProps> = ({
         cookTime: recipe.cookTime,
         servings: recipe.servings,
         category: recipe.category,
+        difficulty: recipe.difficulty || 'Medium',
+        rating: recipe.rating || 0,
+        isFavorite: recipe.isFavorite || false,
         image: recipe.image || '',
         tags: recipe.tags.length > 0 ? recipe.tags : [''],
       });
@@ -54,6 +62,9 @@ export const RecipeModal: React.FC<RecipeModalProps> = ({
         cookTime: 30,
         servings: 4,
         category: '',
+        difficulty: 'Medium' as 'Easy' | 'Medium' | 'Hard',
+        rating: 0,
+        isFavorite: false,
         image: '',
         tags: [''],
       });
@@ -132,13 +143,10 @@ export const RecipeModal: React.FC<RecipeModalProps> = ({
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Image URL</label>
-              <input
-                type="url"
+              <label className="block text-sm font-medium text-gray-700 mb-2">Recipe Image</label>
+              <ImageUpload
                 value={formData.image}
-                onChange={(e) => setFormData(prev => ({ ...prev, image: e.target.value }))}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                placeholder="https://example.com/recipe-image.jpg"
+                onChange={(image) => setFormData(prev => ({ ...prev, image }))}
               />
             </div>
           </div>
@@ -190,13 +198,58 @@ export const RecipeModal: React.FC<RecipeModalProps> = ({
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Category</label>
-              <input
-                type="text"
+              <select
                 value={formData.category}
                 onChange={(e) => setFormData(prev => ({ ...prev, category: e.target.value }))}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                placeholder="e.g., Breakfast, Lunch, Dinner, Dessert"
-              />
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent bg-white"
+              >
+                <option value="">Select Category</option>
+                <option value="breakfast">Breakfast</option>
+                <option value="lunch">Lunch</option>
+                <option value="dinner">Dinner</option>
+                <option value="dessert">Dessert</option>
+                <option value="appetizer">Appetizer</option>
+                <option value="snack">Snack</option>
+                <option value="beverage">Beverage</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Difficulty</label>
+              <select
+                value={formData.difficulty}
+                onChange={(e) => setFormData(prev => ({ ...prev, difficulty: e.target.value as 'Easy' | 'Medium' | 'Hard' }))}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent bg-white"
+              >
+                <option value="Easy">Easy</option>
+                <option value="Medium">Medium</option>
+                <option value="Hard">Hard</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Rating</label>
+              <div className="pt-2">
+                <StarRating
+                  rating={formData.rating}
+                  onRatingChange={(rating) => setFormData(prev => ({ ...prev, rating }))}
+                  size="md"
+                />
+              </div>
+            </div>
+
+            <div className="flex items-center">
+              <label className="flex items-center space-x-3 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={formData.isFavorite}
+                  onChange={(e) => setFormData(prev => ({ ...prev, isFavorite: e.target.checked }))}
+                  className="w-5 h-5 text-orange-500 border-gray-300 rounded focus:ring-2 focus:ring-orange-500"
+                />
+                <span className="text-sm font-medium text-gray-700">Mark as Favorite</span>
+              </label>
             </div>
           </div>
 

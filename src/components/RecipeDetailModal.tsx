@@ -1,6 +1,7 @@
 import React from 'react';
 import { X, Clock, Users, ChefHat } from 'lucide-react';
 import { Recipe } from '../types/Recipe';
+import { StarRating } from './StarRating';
 
 interface RecipeDetailModalProps {
   isOpen: boolean;
@@ -77,7 +78,7 @@ export const RecipeDetailModal: React.FC<RecipeDetailModalProps> = ({
         </div>
 
         <div className="p-6">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
             <div className="bg-orange-50 p-4 rounded-xl text-center">
               <Clock className="w-8 h-8 text-orange-600 mx-auto mb-2" />
               <div className="text-sm text-gray-600">Prep Time</div>
@@ -99,6 +100,13 @@ export const RecipeDetailModal: React.FC<RecipeDetailModalProps> = ({
               </div>
               <div className="text-sm text-gray-600">Category</div>
               <div className="text-xl font-bold text-gray-900">{formatCategory(recipe.category)}</div>
+            </div>
+            <div className="bg-yellow-50 p-4 rounded-xl text-center">
+              <div className="mb-2">
+                <StarRating rating={recipe.rating} readonly size="sm" />
+              </div>
+              <div className="text-sm text-gray-600">Rating</div>
+              <div className="text-lg font-bold text-gray-900">{recipe.difficulty}</div>
             </div>
           </div>
 

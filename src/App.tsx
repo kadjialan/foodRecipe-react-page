@@ -1,44 +1,106 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Plus, Search, Filter, ChefHat } from 'lucide-react';
+import { Plus, Search, Filter, ChefHat, Settings, Timer, FileText, Sliders } from 'lucide-react';
 import { Recipe } from './types/Recipe';
 import { getRecipes, addRecipe, updateRecipe, deleteRecipe } from './utils/localStorage';
 import { RecipeCard } from './components/RecipeCard';
 import { RecipeModal } from './components/RecipeModal';
 import { RecipeDetailModal } from './components/RecipeDetailModal';
 import { DeleteConfirmModal } from './components/DeleteConfirmModal';
+import { ShareModal } from './components/ShareModal';
+import { CookingTimer } from './components/CookingTimer';
+import { ImportExport } from './components/ImportExport';
+import { AdvancedFilters, FilterState } from './components/AdvancedFilters';
 
 function App() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [filterDifficulty, setFilterDifficulty] = useState<string>('');
-  const [filterCategory, setFilterCategory] = useState<string>('');
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe | null>(null);
+  const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
+  const [showTimer, setShowTimer] = useState(false);
+  const [showImportExport, setShowImportExport] = useState(false);
+
+  const [advancedFilters, setAdvancedFilters] = useState<FilterState>({
+    category: '',
+    difficulty: '',
+    minRating: 0,
+    maxPrepTime: 0,
+    maxCookTime: 0,
+    servings: 0,
+    showFavoritesOnly: false,
+    tags: []
+  });
 
   useEffect(() => {
     const loadedRecipes = getRecipes();
     setRecipes(loadedRecipes);
   }, []);
 
+  const availableTags = useMemo(() => {
+    const tags = new Set<string>();
+    recipes.forEach(recipe => {
+      recipe.tags.forEach(tag => tags.add(tag));
+    });
+    return Array.from(tags).sort();
+  }, [recipes]);
+
   const filteredRecipes = useMemo(() => {
     return recipes.filter(recipe => {
+      // Basic search
       const matchesSearch = recipe.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                           recipe.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                          recipe.ingredients.some(ingredient => 
+                          recipe.ingredients.some(ingredient =>
                             ingredient.toLowerCase().includes(searchTerm.toLowerCase())
                           ) ||
-                          recipe.tags.some(tag => 
+                          recipe.tags.some(tag =>
                             tag.toLowerCase().includes(searchTerm.toLowerCase())
                           );
-      
-      const matchesCategory = !filterCategory || recipe.category.toLowerCase().includes(filterCategory.toLowerCase());
-      
-      return matchesSearch && matchesCategory;
+
+      if (!matchesSearch) return false;
+
+      // Advanced filters
+      if (advancedFilters.category && recipe.category.toLowerCase() !== advancedFilters.category.toLowerCase()) {
+        return false;
+      }
+
+      if (advancedFilters.difficulty && recipe.difficulty !== advancedFilters.difficulty) {
+        return false;
+      }
+
+      if (advancedFilters.minRating > 0 && recipe.rating < advancedFilters.minRating) {
+        return false;
+      }
+
+      if (advancedFilters.maxPrepTime > 0 && recipe.prepTime > advancedFilters.maxPrepTime) {
+        return false;
+      }
+
+      if (advancedFilters.maxCookTime > 0 && recipe.cookTime > advancedFilters.maxCookTime) {
+        return false;
+      }
+
+      if (advancedFilters.servings > 0 && recipe.servings !== advancedFilters.servings) {
+        return false;
+      }
+
+      if (advancedFilters.showFavoritesOnly && !recipe.isFavorite) {
+        return false;
+      }
+
+      if (advancedFilters.tags.length > 0) {
+        const hasMatchingTag = advancedFilters.tags.some(filterTag =>
+          recipe.tags.includes(filterTag)
+        );
+        if (!hasMatchingTag) return false;
+      }
+
+      return true;
     });
-  }, [recipes, searchTerm, filterCategory]);
+  }, [recipes, searchTerm, advancedFilters]);
 
   const handleAddRecipe = (recipeData: Omit<Recipe, 'id' | 'createdAt' | 'updatedAt'>) => {
     const newRecipe = addRecipe(recipeData);
@@ -80,6 +142,22 @@ function App() {
     setIsDeleteModalOpen(true);
   };
 
+  const openShareModal = (recipe: Recipe) => {
+    setSelectedRecipe(recipe);
+    setIsShareModalOpen(true);
+  };
+
+  const handleToggleFavorite = (recipe: Recipe) => {
+    const updatedRecipe = updateRecipe(recipe.id, { isFavorite: !recipe.isFavorite });
+    if (updatedRecipe) {
+      setRecipes(prev => prev.map(r => r.id === recipe.id ? updatedRecipe : r));
+    }
+  };
+
+  const handleImportRecipes = (importedRecipes: Recipe[]) => {
+    setRecipes(prev => [...prev, ...importedRecipes]);
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
@@ -95,13 +173,35 @@ function App() {
                 <p className="text-gray-600">Discover and manage your favorite recipes</p>
               </div>
             </div>
-            <button
-              onClick={() => setIsAddModalOpen(true)}
-              className="flex items-center space-x-2 px-6 py-3 bg-orange-500 text-white rounded-xl hover:bg-orange-600 transition-colors shadow-lg hover:shadow-xl"
-            >
-              <Plus className="w-5 h-5" />
-              <span className="font-medium">Add Recipe</span>
-            </button>
+            <div className="flex items-center space-x-3">
+              <button
+                onClick={() => setShowTimer(!showTimer)}
+                className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-colors ${
+                  showTimer ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                }`}
+              >
+                <Timer className="w-5 h-5" />
+                <span>Timer</span>
+              </button>
+
+              <button
+                onClick={() => setShowImportExport(!showImportExport)}
+                className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-colors ${
+                  showImportExport ? 'bg-blue-100 text-blue-700' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                }`}
+              >
+                <FileText className="w-5 h-5" />
+                <span>Import/Export</span>
+              </button>
+
+              <button
+                onClick={() => setIsAddModalOpen(true)}
+                className="flex items-center space-x-2 px-6 py-3 bg-orange-500 text-white rounded-xl hover:bg-orange-600 transition-colors shadow-lg hover:shadow-xl"
+              >
+                <Plus className="w-5 h-5" />
+                <span className="font-medium">Add Recipe</span>
+              </button>
+            </div>
           </div>
         </div>
       </header>
@@ -119,26 +219,49 @@ function App() {
               className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent"
             />
           </div>
-          
-          <div className="relative">
-            <Filter className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-            <select
-              value={filterCategory}
-              onChange={(e) => setFilterCategory(e.target.value)}
-              className="pl-10 pr-8 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent bg-white"
-            >
-              <option value="">All Categories</option>
-              <option value="breakfast">Breakfast</option>
-              <option value="lunch">Lunch</option>
-              <option value="dinner">Dinner</option>
-              <option value="dessert">Dessert</option>
-              <option value="appetizer">Appetizer</option>
-              <option value="snack">Snack</option>
-              <option value="beverage">Beverage</option>
-            </select>
-          </div>
+
+          <button
+            onClick={() => setShowAdvancedFilters(!showAdvancedFilters)}
+            className={`flex items-center space-x-2 px-4 py-3 border rounded-xl transition-colors ${
+              showAdvancedFilters
+                ? 'border-orange-500 bg-orange-50 text-orange-700'
+                : 'border-gray-300 bg-white text-gray-700 hover:bg-gray-50'
+            }`}
+          >
+            <Sliders className="w-5 h-5" />
+            <span>Advanced Filters</span>
+          </button>
         </div>
       </div>
+
+      {/* Advanced Filters */}
+      {showAdvancedFilters && (
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-6">
+          <AdvancedFilters
+            filters={advancedFilters}
+            onFiltersChange={setAdvancedFilters}
+            availableTags={availableTags}
+          />
+        </div>
+      )}
+
+      {/* Timer */}
+      {showTimer && (
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-6">
+          <CookingTimer
+            initialTime={1500} // 25 minutes default
+            label="Cooking Timer"
+            onComplete={() => alert('Timer finished!')}
+          />
+        </div>
+      )}
+
+      {/* Import/Export */}
+      {showImportExport && (
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-6">
+          <ImportExport recipes={recipes} onImport={handleImportRecipes} />
+        </div>
+      )}
 
       {/* Stats */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-6">
@@ -197,6 +320,8 @@ function App() {
                 onEdit={openEditModal}
                 onDelete={openDeleteModal}
                 onView={openDetailModal}
+                onToggleFavorite={handleToggleFavorite}
+                onShare={openShareModal}
               />
             ))}
           </div>
@@ -238,6 +363,15 @@ function App() {
           setSelectedRecipe(null);
         }}
         onConfirm={handleDeleteRecipe}
+        recipe={selectedRecipe}
+      />
+
+      <ShareModal
+        isOpen={isShareModalOpen}
+        onClose={() => {
+          setIsShareModalOpen(false);
+          setSelectedRecipe(null);
+        }}
         recipe={selectedRecipe}
       />
     </div>

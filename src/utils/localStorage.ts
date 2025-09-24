@@ -31,6 +31,9 @@ export const addRecipe = (recipe: Omit<Recipe, 'id' | 'createdAt' | 'updatedAt'>
   const newRecipe: Recipe = {
     ...recipe,
     category: recipe.category || 'Main Course',
+    difficulty: recipe.difficulty || 'Medium',
+    rating: recipe.rating || 0,
+    isFavorite: recipe.isFavorite || false,
     id: crypto.randomUUID(),
     createdAt: new Date(),
     updatedAt: new Date(),
